@@ -1,0 +1,53 @@
+<h1>Nested selectors</h1>
+<hr />
+
+<form [formGroup]="formAtlas" (ngSubmit)="onSubmit()">
+  <!-- Regions -->
+  <div class="row mb-3">
+    <div class="col">
+      <label class="form-label" for="">Continent</label>
+      <select class="form-control" formControlName="region">
+        <option value="">-- Select a continent --</option>
+        <option *ngFor="let region of regions" [value]="region">
+          {{ region }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Countries -->
+  <div class="row mb-3" *ngIf="countriesByRegion.length > 0">
+    <div class="col">
+      <label class="form-label" for="">Country</label>
+      <select class="form-control" formControlName="country">
+        <option value="">-- Select a country --</option>
+        <option
+          *ngFor="let country of countriesByRegion"
+          [value]="country.cca3"
+        >
+          {{ country.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Borders -->
+
+  <div class="row mb-3" *ngIf="bordersByCountry.length > 0">
+    <div class="col">
+      <label class="form-label" for="">Borders</label>
+      <select class="form-control" formControlName="border">
+        <option value="">-- Select a border --</option>
+        <option *ngFor="let country of bordersByCountry" [value]="country.cca3">
+          {{ country.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+
+<h3>Form</h3>
+<code>{{ formAtlas.value | json }}</code>
+<p>is form valid: {{ formAtlas.valid }}</p>
